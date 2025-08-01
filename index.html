@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <link rel="icon" href="Assets/icono.ico" type="image/x-icon">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Overwachas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style id="app-style">
+    :root {
+      --primary: #007ACC;
+      --primary-glow: #00A8FF;
+      --secondary: #FF7B00;
+      --dark-bg: #0d0d0d;
+      --darker-bg: #080808;
+      --light-text: #ffffff;
+      --gray-text: #bbbbbb;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--dark-bg);
+      font-family: 'Rajdhani', sans-serif;
+      color: var(--light-text);
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 15% 50%, rgba(0, 122, 204, 0.08) 0%, transparent 25%),
+        radial-gradient(circle at 85% 30%, rgba(0, 122, 204, 0.08) 0%, transparent 25%);
+    }
+
+    #hero {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.7), var(--dark-bg)),
+                  url('https://cdn.pixabay.com/photo/2022/05/08/03/10/video-game-7181106_1280.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+    
+    #hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at center, rgba(0, 122, 204, 0.2), transparent 70%);
+      z-index: 1;
+    }
+    
+    #hero .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+    
+    .logo {
+      width: 300px;
+      height: auto;
+      margin-bottom: 20px;
+      transition: all 0.5s ease;
+      filter: drop-shadow(0 0 10px rgba(0, 122, 204, 0.8));
+    }
+    
+    .logo:hover {
+      transform: scale(1.1) rotate(2deg);
+      filter: drop-shadow(0 0 15px rgba(0, 122, 204, 1));
+    }
+    
+    .title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 4.5rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(to right, #ffffff, #00a8ff, #ffffff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 20px rgba(0, 122, 204, 0.5);
+    }
+    
+    .subtitle {
+      color: var(--gray-text);
+      font-size: 1.8rem;
+      margin-top: 0;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+    }
+
+    .glow {
+      text-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary);
+      color: var(--light-text);
+      font-family: 'Orbitron', sans-serif;
+      letter-spacing: 2px;
+      position: relative;
+      display: inline-block;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+    }
+    
+    .glow::after {
+      content: '';
+      position: absolute;
+      left: 25%;
+      right: 25%;
+      bottom: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--primary), transparent);
+    }
+
+    .section-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 6rem 2rem;
+    }
+    
+    section {
+      position: relative;
+    }
+
+    .about {
+      position: relative;
+    }
+    
+    .about::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--primary), transparent);
+    }
+
+    .card {
+      background: rgba(26, 26, 26, 0.7);
+      border-radius: 15px;
+      padding: 2rem;
+      box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 30px rgba(0, 122, 204, 0.3);
+    }
+
+    .member-card {
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 2rem;
+      height: 350px;
+    }
+
+    .member-avatar {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 10px 10px 0 0;
+      transition: all 0.3s ease;
+    }
+
+    .member-info {
+      padding: 1.5rem;
+      position: relative;
+    }
+
+    .role-badge {
+      position: absolute;
+      top: -15px;
+      right: 20px;
+      background: var(--primary);
+      color: var(--light-text);
+      padding: 0.3rem 1rem;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      box-shadow: 0 3px 10px rgba(0, 122, 204, 0.5);
+    }
+
+    .member-name {
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+    }
+
+    .stats-preview {
+      position: absolute;
+      bottom: -100%;
+      left: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0.85);
+      padding: 1rem;
+      transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      border-top: 2px solid var(--primary);
+    }
+
+    .member-card:hover .stats-preview {
+      bottom: 0;
+    }
+
+    .stat {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+    }
+
+    .stat-value {
+      color: var(--primary-glow);
+      font-weight: 600;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .form-group {
+      position: relative;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      color: var(--light-text);
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(0, 122, 204, 0.3);
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      background-size: 1em;
+    }
+
+    button {
+      background: linear-gradient(135deg, var(--primary), var(--primary-glow));
+      color: white;
+      padding: 1rem;
+      border: none;
+      border-radius: 8px;
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 600;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(0, 122, 204, 0.5);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(0, 122, 204, 0.7);
+      background: linear-gradient(135deg, #0091EA, var(--primary));
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    .chat-container {
+      height: 400px;
+      overflow-y: auto;
+      margin-bottom: 1rem;
+      background: rgba(20, 20, 20, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      padding: 1rem;
+    }
+
+    .message {
+      margin-bottom: 1rem;
+      padding: 1rem;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      position: relative;
+    }
+
+    .message-info {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+      color: var(--gray-text);
+    }
+
+    .message-author {
+      font-weight: 600;
+      color: var(--primary-glow);
+    }
+
+    .tab-buttons {
+      display: flex;
+      margin-bottom: 2rem;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .tab-button {
+      padding: 0.8rem 1.5rem;
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 30px;
+      color: var(--gray-text);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .tab-button.active {
+      background: var(--primary);
+      color: white;
+      border-color: transparent;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .event {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      padding: 1.5rem;
+      background: rgba(26, 26, 26, 0.7);
+      border-radius: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .event::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: var(--primary);
+    }
+
+    .event-date {
+      min-width: 70px;
+      text-align: center;
+      padding-right: 1.5rem;
+      border-right: 1px solid rgba(255, 255, 255, 0.1);
+      margin-right: 1.5rem;
+    }
+
+    .event-day {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primary-glow);
+    }
+
+    .event-month {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      color: var(--gray-text);
+    }
+
+    .event-details {
+      flex: 1;
+    }
+
+    .event-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+
+    .event-desc {
+      font-size: 0.9rem;
+      color: var(--gray-text);
+      margin-bottom: 0.7rem;
+    }
+
+    .event-actions {
+      display: flex;
+      gap: 0.7rem;
+      align-items: center;
+    }
+
+    .event-actions button {
+      padding: 0.4rem 0.8rem;
+      font-size: 0.8rem;
+    }
+
+    .reminder-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--gray-text);
+    }
+
+    .toggle-switch {
+      position: relative;
+      width: 40px;
+      height: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    .toggle-switch::before {
+      content: '';
+      position: absolute;
+      left: 2px;
+      top: 2px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: white;
+      transition: all 0.3s ease;
+    }
+
+    .toggle-switch.active {
+      background: var(--primary);
+    }
+
+    .toggle-switch.active::before {
+      left: 22px;
+    }
+
+    .socials {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .social-icon {
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(26, 26, 26, 0.7);
+      border-radius: 50%;
+      font-size: 1.6rem;
+      color: var(--light-text);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .social-icon::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      background: var(--primary);
+      border-radius: 50%;
+      transform: scale(0);
+      transition: transform 0.5s ease;
+      z-index: 0;
+    }
+
+    .social-icon i {
+      position: relative;
+      z-index: 1;
+    }
+
+    .social-icon:hover::before {
+      transform: scale(1);
+    }
+
+    .social-icon:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0, 122, 204, 0.5);
+    }
+
+    footer {
+      background-color: var(--darker-bg);
+      padding: 2rem;
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--gray-text);
+      position: relative;
+    }
+
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--primary), transparent);
+    }
+
+    .footer-links {
+      margin-bottom: 1rem;
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+    }
+
+    .footer-link {
+      color: var(--gray-text);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-link:hover {
+      color: var(--primary-glow);
+    }
+
+    .scroll-to-top {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      width: 40px;
+      height: 40px;
+      background: var(--primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s ease;
+      box-shadow: 0 3px 10px rgba(0, 122, 204, 0.5);
+      z-index: 100;
+    }
+
+    .scroll-to-top.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .notification {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: rgba(0, 0, 0, 0.9);
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 8px;
+      z-index: 1000;
+      opacity: 0;
+      transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+      box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+      border-left: 4px solid var(--primary);
+    }
+
+    .notification.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+      .title {
+        font-size: 3rem;
+      }
+      
+      .subtitle {
+        font-size: 1.2rem;
+      }
+      
+      .section-container {
+        padding: 4rem 1rem;
+      }
+      
+      .socials {
+        gap: 1.5rem;
+      }
+      
+      .social-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.3rem;
+      }
+
+      .event {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .event-date {
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding-right: 0;
+        padding-bottom: 0.7rem;
+        margin-right: 0;
+        margin-bottom: 0.7rem;
+        width: 100%;
+        text-align: left;
+        display: flex;
+        align-items: center;
+      }
+      
+      .event-day {
+        margin-right: 10px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .logo {
+        width: 200px;
+      }
+      
+      .title {
+        font-size: 2.5rem;
+      }
+      
+      .glow {
+        font-size: 1.8rem;
+      }
+      
+      .tab-buttons {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+    }
+
+    /* Animations and keyframes */
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(0, 122, 204, 0.7);
+      }
+      70% {
+        box-shadow: 0 0 0 10px rgba(0, 122, 204, 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(0, 122, 204, 0);
+      }
+    }
+
+    .animate-pulse {
+      animation: pulse 2s infinite;
+    }
+
+    .floating {
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-20px);
+      }
+      100% {
+        transform: translateY(0px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="scroll-to-top">
+    <i class="fas fa-chevron-up"></i>
+  </div>
+
+  <div class="notification" id="notification">
+    Mensaje enviado con éxito
+  </div>
+
+  <section id="hero">
+    <div class="hero-content">
+      <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;">
+        <img src="Assets/icono.png" alt="Logo Overwachas" class="logo" style="width:160px;max-width:60vw;margin-bottom:10px;">
+        <h1 class="title" style="font-size:2.2rem;text-align:center;">OVERWACHAS</h1>
+      </div>
+      <p class="subtitle">Dominando el competitivo Uruguayo</p>
+      <div class="mt-12">
+        <a href="#ser-overwacha" style="text-decoration:none;">
+          <button class="px-8 py-3" type="button">
+            Únete a nosotros <i class="fas fa-arrow-right ml-2"></i>
+          </button>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="about">
+    <div class="section-container" data-aos="fade-up">
+      <h2 class="glow text-4xl" style="display:flex;justify-content:center;align-items:center;text-align:center;width:100%;">SOBRE NOSOTROS</h2>
+      <div class="card">
+        <p class="text-xl leading-relaxed mb-6">
+          Somos <span class="text-blue-400 font-bold">Overwachas</span>, un equipo competitivo de Overwatch que busca mejorar y llevar a la cima a Uruguay, representando y demostrando que con los Overwachas es posible.
+        </p>
+        <p class="text-xl leading-relaxed">
+          Practicamos regularmente, jugamos mucho y participamos en torneos, no son la gran cosa, pero igualmente seguimos avanzando lento, pero intentamos mejorar, Overwachas nunca pedira tus contraseñas.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="members" class="bg-[#0a0a0a]">
+    <div class="section-container" data-aos="fade-up">
+      <h2 class="glow text-4xl" style="display:flex;justify-content:center;align-items:center;text-align:center;width:100%;">INTEGRANTES</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        
+        <!-- Tank Player -->
+        <div class="member-card card">
+          <img src="Assets/Wrecking_ball_Klyston.png" alt="KlystonSama" class="member-avatar" style="max-width:200px;max-height:200px;object-fit:cover;display:block;margin:0 auto;border:4px solid #0a223a;box-shadow:0 0 16px #007ACC;">
+          <div class="member-info">
+            <div class="role-badge">Tank</div>
+            <h3 class="member-name">KlystonSama</h3>
+            <p>Especialista en Wrecking Ball, destacado por su mitigacion.</p>
+          </div>
+        </div>
+        
+        <!-- DPS Player 1 -->
+        <div class="member-card card">
+          <img src="Assets/mei-checking-in-blender-Neixius.png" alt="Neixius" class="member-avatar" style="max-width:220px;max-height:220px;object-fit:cover;display:block;margin:0 auto;border:4px solid #0a223a;box-shadow:0 0 16px #007ACC;">
+          <div class="member-info">
+            <div class="role-badge">DPS</div>
+            <h3 class="member-name">Neixius</h3>
+            <p>Maestro de Mei, y buen jugador de Hanzo con mucho potencial de Aim.</p>
+          </div>
+        </div>
+        
+        <!-- DPS Player 2 -->
+        <div class="member-card card">
+          <img src="Assets/Pharah Migu.png" alt="Migu" class="member-avatar" style="max-width:200px;max-height:200px;object-fit:cover;display:block;margin:0 auto;border:4px solid #0a223a;box-shadow:0 0 16px #007ACC;">
+          <div class="member-info">
+            <div class="role-badge">DPS</div>
+            <h3 class="member-name">Migu</h3>
+            <p>Experto en Pharah, agresividad al atacar explosivamente.</p>
+          </div>
+        </div>
+        
+        <!-- Support Player -->
+        <div class="member-card card">
+          <img src="Assets/SantiagoCuki.png" alt="Santiagocuki" class="member-avatar" style="max-width:200px;max-height:200px;object-fit:cover;display:block;margin:0 auto;border:4px solid #0a223a;box-shadow:0 0 16px #007ACC;">
+          <div class="member-info">
+            <div class="role-badge">Support</div>
+            <h3 class="member-name">Santiagocuki</h3>
+            <p>El pilar defensivo del equipo, su gran curación y experto con Lifeweaver.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section id="events" class="bg-[#0a0a0a]">
+    <div class="section-container" data-aos="fade-up" id="ser-overwacha">
+      <h2 class="glow text-4xl" style="display:flex;justify-content:center;align-items:center;text-align:center;width:100%;">¿SER UN OVERWACHA?</h2>
+      
+      <form action="https://formspree.io/f/mzzvabke" method="POST" id="join-form">
+        <div class="space-y-6 mt-8">
+          <div class="form-group">
+            <input type="text" name="Nombre" placeholder="Nombre / Nickname" required>
+          </div>
+          <div class="form-group">
+            <input type="text" name="BattleTag" placeholder="BattleTag" required>
+          </div>
+          <div class="form-group">
+            <select name="Rol" required style="color:#111;background:#fff;">
+              <option value="" style="color:#111;background:#fff;">Selecciona tu rol</option>
+              <option value="Tank" style="color:#111;background:#fff;">Tank</option>
+              <option value="DPS" style="color:#111;background:#fff;">DPS</option>
+              <option value="Support" style="color:#111;background:#fff;">Support</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <input type="email" name="Correo" placeholder="Correo de contacto" required>
+          </div>
+          <div class="form-group">
+            <textarea name="Mensaje" placeholder="Cuéntanos sobre tu experiencia en Overwatch" rows="4"></textarea>
+          </div>
+          <button type="submit" style="display:block;margin:0 auto;">
+            <i class="fas fa-user-plus mr-1"></i> ENVIAR SOLICITUD
+          </button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <section id="contact" class="bg-[#080808]">
+    <div class="section-container" data-aos="fade-up">
+      <h2 class="glow text-4xl" style="display:flex;justify-content:center;align-items:center;text-align:center;width:100%;">REDES Y CONTACTO</h2>
+      <div class="socials">
+        <a href="https://www.instagram.com/overwachas?igsh=MTY3Z2Z4M25hZnlvYw==" class="social-icon">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://www.tiktok.com/@overwachas_?_t=ZM-8yWZEL6QzDk&_r=1" class="social-icon">
+          <i class="fab fa-tiktok"></i>
+        </a>
+        <a href="https://discord.gg/7cjWk5vhRH" class="social-icon" target="_blank" rel="noopener">
+          <i class="fab fa-discord"></i>
+        </a>
+        <a href="javascript:void(0)" class="social-icon">
+          <i class="fab fa-youtube"></i>
+        </a>
+        <a href="mailto:overwachasofc@gmail.com" class="social-icon">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </div>
+      <div class="mt-8 text-xl text-center text-gray-400">
+        <p>¿Tienes alguna pregunta? Escríbenos a <a href="mailto:overwachasofc@gmail.com" class="text-blue-400 hover:text-blue-300">overwachasofc@gmail.com</a></p>
+        <p class="mt-2">¡Síguenos en redes sociales para estar al tanto de nuestros eventos y partidas!</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 Overwachas. Todos los derechos reservados.</p>
+    <p class="mt-2 text-xs">Overwatch no es una marca registrada de Blizzard Entertainment, Inc.</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script id="app-script">
+    // Initialize AOS
+    AOS.init({
+      duration: 800,
+      easing: 'ease-in-out',
+      once: false,
+      mirror: false
+    });
+    
+    // Scroll to top button
+    const scrollToTopBtn = document.querySelector('.scroll-to-top');
+    
+    window.addEventListener('scroll', () => {
+      if (window.pageYOffset > 300) {
+        scrollToTopBtn.classList.add('visible');
+      } else {
+        scrollToTopBtn.classList.remove('visible');
+      }
+    });
+    
+    scrollToTopBtn.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+    
+    // Tab switching
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const tabContents = document.querySelectorAll('.tab-content');
+    
+    tabButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const tabName = button.dataset.tab;
+        
+        // Deactivate all buttons and tabs
+        tabButtons.forEach(btn => btn.classList.remove('active'));
+        tabContents.forEach(tab => tab.classList.remove('active'));
+        
+        // Activate the clicked button and corresponding tab
+        button.classList.add('active');
+        document.getElementById(`${tabName}-tab`).classList.add('active');
+      });
+    });
+    
+    // Toggle switches for event reminders
+    const toggleSwitches = document.querySelectorAll('.toggle-switch');
+    
+    toggleSwitches.forEach(toggle => {
+      toggle.addEventListener('click', () => {
+        toggle.classList.toggle('active');
+        
+        const eventId = toggle.dataset.event;
+        const isActive = toggle.classList.contains('active');
+        
+        // Store preference in localStorage
+        const reminderPrefs = JSON.parse(localStorage.getItem('reminderPrefs') || '{}');
+        reminderPrefs[eventId] = isActive;
+        localStorage.setItem('reminderPrefs', JSON.stringify(reminderPrefs));
+        
+        // Show notification
+        showNotification(isActive ? 'Recordatorio activado' : 'Recordatorio desactivado');
+      });
+      
+      // Load saved preferences
+      const reminderPrefs = JSON.parse(localStorage.getItem('reminderPrefs') || '{}');
+      const eventId = toggle.dataset.event;
+      if (reminderPrefs[eventId]) {
+        toggle.classList.add('active');
+      }
+    });
+    
+    // Initialize the application
+    document.addEventListener('DOMContentLoaded', () => {
+      loadMessages();
+    });
+  </script>
+</body>
+</html>
